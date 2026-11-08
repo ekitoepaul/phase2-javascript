@@ -106,6 +106,8 @@ Follow these steps to execute the program:
 
 ## 9. Testing the Application
 
+The following test cases can be used to verify the program:
+
 | Test Case | Input | Expected Result |
 |---|---|---|
 | Valid customer name | Paul Ekitoe | Accepted |
@@ -120,64 +122,6 @@ Follow these steps to execute the program:
 | Amount above maximum | 160,000 | Rejected |
 | Withdrawal below minimum | 30 | Rejected |
 | Valid transaction | 1,000 | Receipt generated |
-
-Test case Output from the Console:
-The following test cases can be used to verify the program:
-app.js:159 
-========================================
-          PESA HARAKA RECEIPT
-========================================
-Customer Name : PAUL EKITOE LOMOR
-Phone Number  : 254717544278
-Reference No. : 672685
-----------------------------------------
-Transaction   : Withdraw Cash
-----------------------------------------
-Description           Amount (KSh)
-Transaction                 50,001
-Transaction Fee            KSh 309
-----------------------------------------
-TOTAL                       50,310
-========================================
-       Thank you for using Pesa Haraka!
-========================================
-
-app.js:159 
-========================================
-          PESA HARAKA RECEIPT
-========================================
-Customer Name : NAPEIKAR JAMES EKITOE
-Phone Number  : 254707088524
-Reference No. : 410731
-----------------------------------------
-Transaction   : Send Money
-----------------------------------------
-Description           Amount (KSh)
-Transaction                  1,001
-Transaction Fee             KSh 53
-----------------------------------------
-TOTAL                        1,054
-========================================
-       Thank you for using Pesa Haraka!
-========================================
-app.js:159 
-========================================
-          PESA HARAKA RECEIPT
-========================================
-Customer Name : DORCAS NATIIR
-Phone Number  : 254790151004
-Reference No. : 221387
-----------------------------------------
-Transaction   : Pay a Business
-----------------------------------------
-Description           Amount (KSh)
-Transaction                 20,001
-Transaction Fee               FREE
-----------------------------------------
-TOTAL                       20,001
-========================================
-       Thank you for using Pesa Haraka!
-========================================
 
 ## 10. Project Limitations
 
@@ -197,6 +141,185 @@ The project can be enhanced by:
 - Implementing stronger phone number validation.
 - Introducing downloadable and printable receipts.
 - Integrating an actual mobile money payment API.
+
+## 9. Testing the Application – Test Cases and Expected Outputs
+
+The following test cases are designed to verify the functionality of the Pesa Haraka Fee Calculator, including customer information validation, phone number validation, transaction selection, amount validation, fee calculation, and receipt generation.
+
+### 9.1 Test Cases
+
+| Test Case | Customer Name | Phone Number | Transaction Type | Amount (KSh) | Expected Output |
+|---|---|---|---|---:|---|
+| TC01 | PAUL EKITOE | 0717544278| Send Money | 100 | Transaction successful. Fee: FREE. Total: KSh 100. |
+| TC02 | NAPEIKAR JAMES | 0707088524 | Send Money | 1,000 | Transaction successful. Fee: KSh 13. Total: KSh 1,013. |
+| TC03 | DORCAS NATIIR | 0790151004 | Withdraw Cash | 1001 | Transaction successful. Fee: KSh 69. Total: KSh 1070. |
+| TC04 |SHARON AKUWAM | 0795619240 | Withdraw Cash | 4589 | Transaction successful. Fee: KSh 69. Total: KSh 4658. |
+| TC05| AMBROSE ETABO | 0757264304 | Pay a Business | 20,001 | Transaction successful. Fee: FREE. Total: KSh 20,001. |
+| TC06 | Alice Chebet | 0712345678 | Withdraw Cash | 25 | Transaction refused: Minimum withdrawal is KSh 50. |
+| TC07 | PETER NJOROGE | 0713254876 | Send Money | 155,000 | Transaction refused: Maximum amount is KSh 150,000. |
+| TC08 | KELVIN KIPKETER | 1234567890 | Invalid phone number. Enter 10 digits starting with 07 or 01. |
+| TC09 |FRANCIS KARANJA  | 0724419793 | Send Money | TEN | Invalid amount. Please enter a valid number. |
+| TC10 | Blank | 0795858748 | Send Money | 500 | Transaction cancelled: A valid customer name is required. |
+
+### 9.2 Sample Expected Transaction Receipt
+
+**Test Case TC02: Send Money – KSh 500**
+
+Sample console output:
+
+```text
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : PAUL EKITOE
+Phone Number  : 254717544278
+Reference No. : 257902
+----------------------------------------
+Transaction   : Send Money
+----------------------------------------
+Description           Amount (KSh)
+Transaction                    100
+Transaction Fee               FREE
+----------------------------------------
+TOTAL                          100
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : NAPEIKAR JAMES
+Phone Number  : 254707088524
+Reference No. : 292975
+----------------------------------------
+Transaction   : Send Money
+----------------------------------------
+Description           Amount (KSh)
+Transaction                  1,000
+Transaction Fee             KSh 13
+----------------------------------------
+TOTAL                        1,013
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+
+
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : DORCAS NATIIR
+Phone Number  : 254790151004
+Reference No. : 190552
+----------------------------------------
+Transaction   : Withdraw Cash
+----------------------------------------
+Description           Amount (KSh)
+Transaction                  1,001
+Transaction Fee             KSh 69
+----------------------------------------
+TOTAL                        1,070
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : SHARON AKUWAM
+Phone Number  : 254795619240
+Reference No. : 163036
+----------------------------------------
+Transaction   : Withdraw Cash
+----------------------------------------
+Description           Amount (KSh)
+Transaction                  4,589
+Transaction Fee             KSh 69
+----------------------------------------
+TOTAL                        4,658
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : AMBROSE ETABO
+Phone Number  : 254757264304
+Reference No. : 850312
+----------------------------------------
+Transaction   : Pay a Business
+----------------------------------------
+Description           Amount (KSh)
+Transaction                 20,001
+Transaction Fee               FREE
+----------------------------------------
+TOTAL                       20,001
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+
+app.js:86 Transaction refused: Minimum withdrawal is KSh 50.
+
+app.js:82 Transaction refused: Maximum amount is KSh 150,000.
+
+app.js:28 Invalid phone number. Enter 10 digits starting with 07 or 01.
+
+app.js:78 Invalid amount. Please enter a valid number.
+
+app.js:13 Transaction cancelled: A valid customer name is required.
+
+
+
+
+
+```
+
+*Note: The reference number is randomly generated and will differ each time the program runs.*
+
+### 9.3 Sample Withdrawal Receipt
+
+**Test Case TC07: Withdraw Cash – KSh 5,000**
+
+```text
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : DAVID KIPTOO
+Phone Number  : 254723344556
+Reference No. : 654321
+----------------------------------------
+Transaction   : Withdraw Cash
+----------------------------------------
+Description          Amount (KSh)
+Transaction                5,000
+Transaction Fee               69
+----------------------------------------
+TOTAL                       5,069
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+```
+
+### 9.4 Test Results
+
+The application is expected to demonstrate the following:
+
+1. Correct collection of customer names and phone numbers.
+2. Successful validation of Kenyan mobile phone numbers.
+3. Correct selection of transaction types using a switch statement.
+4. Accurate conversion of transaction amounts using `Number()`.
+5. Rejection of invalid numerical input using `Number.isNaN()`.
+6. Enforcement of minimum withdrawal and maximum transaction limits.
+7. Correct calculation of transaction fees.
+8. Successful generation of formatted transaction receipts.
+
+**Conclusion:** The test cases demonstrate how the Pesa Haraka Fee Calculator handles valid transactions, invalid customer information, transaction limits, and fee calculations. The expected outputs provide a basis for verifying that the JavaScript program performs according to its requirements.
 
 ## 12. Author
 
