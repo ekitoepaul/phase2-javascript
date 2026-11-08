@@ -1,0 +1,1 @@
+Building a small program that asks for a transaction, checks the details, works out the fee and prints a clear confirmation. This programe will use variables,numbers, strings, input with promp(), conditionals and switch
