@@ -106,8 +106,6 @@ Follow these steps to execute the program:
 
 ## 9. Testing the Application
 
-The following test cases can be used to verify the program:
-
 | Test Case | Input | Expected Result |
 |---|---|---|
 | Valid customer name | Paul Ekitoe | Accepted |
@@ -122,6 +120,64 @@ The following test cases can be used to verify the program:
 | Amount above maximum | 160,000 | Rejected |
 | Withdrawal below minimum | 30 | Rejected |
 | Valid transaction | 1,000 | Receipt generated |
+
+Test case Output from the Console:
+The following test cases can be used to verify the program:
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : PAUL EKITOE LOMOR
+Phone Number  : 254717544278
+Reference No. : 672685
+----------------------------------------
+Transaction   : Withdraw Cash
+----------------------------------------
+Description           Amount (KSh)
+Transaction                 50,001
+Transaction Fee            KSh 309
+----------------------------------------
+TOTAL                       50,310
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : NAPEIKAR JAMES EKITOE
+Phone Number  : 254707088524
+Reference No. : 410731
+----------------------------------------
+Transaction   : Send Money
+----------------------------------------
+Description           Amount (KSh)
+Transaction                  1,001
+Transaction Fee             KSh 53
+----------------------------------------
+TOTAL                        1,054
+========================================
+       Thank you for using Pesa Haraka!
+========================================
+app.js:159 
+========================================
+          PESA HARAKA RECEIPT
+========================================
+Customer Name : DORCAS NATIIR
+Phone Number  : 254790151004
+Reference No. : 221387
+----------------------------------------
+Transaction   : Pay a Business
+----------------------------------------
+Description           Amount (KSh)
+Transaction                 20,001
+Transaction Fee               FREE
+----------------------------------------
+TOTAL                       20,001
+========================================
+       Thank you for using Pesa Haraka!
+========================================
 
 ## 10. Project Limitations
 
