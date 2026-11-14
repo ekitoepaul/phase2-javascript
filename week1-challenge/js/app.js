@@ -1,142 +1,161 @@
 // -----------------------------------------
-//PESA HARAKA FEE CALCULATOR
+// PESA HARAKA FEE CALCULATOR
 // -----------------------------------------
 
 // Fixed transaction limits
-const Min_Withdrawl = 50;
-const Max_Amount = 150000;
+const MIN_WITHDRAWAL = 50;
+const MAX_AMOUNT = 150000;
+
+let errorMessage = "";
 
 // 1. Ask for customer's full name
-const customerName = prompt("Enter your full name:");
+const nameInput = prompt("Enter your full name:");
+const fullName = nameInput ? nameInput.trim() : "";
 
-if (customerName === null || customerName.trim() === "") {
-  console.log("Transaction cancelled: A valid customer name is required.");
-} else {
-  const fullName = customerName.trim();
+if (fullName === "") {
+  errorMessage = "Transaction cancelled: A valid customer name is required.";
+}
 
-  // 2. Ask for phone number
+// 2. Ask for phone number
+let phoneNumber = "";
+
+if (errorMessage === "") {
   const phoneInput = prompt("Enter your phone number:");
+  phoneNumber = phoneInput === null ? "" : phoneInput.replaceAll(" ", "");
 
-  if (phoneInput === null) {
-    console.log("Transaction cancelled: Phone number is required.");
+  const hasValidPrefix =
+    phoneNumber.startsWith("07") || phoneNumber.startsWith("01");
+
+  const isAllDigits = /^\d+$/.test(phoneNumber);
+
+  if (phoneNumber.length !== 10 || !hasValidPrefix || !isAllDigits) {
+    errorMessage =
+      "Invalid phone number. Enter 10 digits starting with 07 or 01.";
+  }
+}
+
+if (errorMessage === "") {
+  // Format phone number to international format
+  const formattedPhone = "254" + phoneNumber.substring(1);
+
+  // 3. Ask for transaction type
+  const transactionInput = prompt(
+    "Select transaction type:\n" +
+      "1. Send money\n" +
+      "2. Withdraw cash\n" +
+      "3. Pay a business",
+  );
+
+  if (transactionInput === null || transactionInput.trim() === "") {
+    errorMessage = "Transaction cancelled: Select a transaction type.";
   } else {
-    // Remove spaces from phone number
-    const phoneNumber = phoneInput.replace(/\s/g, "");
+    const transactionChoice = Number(transactionInput);
 
-    // Validate phone number
-    if (!/^(07|01)\d{8}$/.test(phoneNumber)) {
-      console.log(
-        "Invalid phone number. Enter 10 digits starting with 07 or 01.",
-      );
-    } else {
-      // Format phone number to international format
-      const formattedPhone = "254" + phoneNumber.substring(1);
+    let transactionType = "";
 
-      // 3. Ask for transaction type
-      const transactionInput = prompt(
-        "Select transaction type:\n" +
-          "1. Send money\n" +
-          "2. Withdraw cash\n" +
-          "3. Pay a business",
-      );
+    // Switch statement for transaction selection
+    switch (transactionChoice) {
+      case 1:
+        transactionType = "Send Money";
+        break;
 
-      if (transactionInput === null || transactionInput.trim() === "") {
-        console.log("Transaction cancelled: Select a transaction type.");
+      case 2:
+        transactionType = "Withdraw Cash";
+        break;
+
+      case 3:
+        transactionType = "Pay a Business";
+        break;
+
+      default:
+        errorMessage = "Unknown transaction type. Select 1, 2 or 3.";
+    }
+
+    if (errorMessage === "") {
+      // 4. Ask for transaction amount
+      const amountInput = prompt("Enter transaction amount in KSh:");
+
+      if (amountInput === null || amountInput.trim() === "") {
+        errorMessage = "Amount is required. Transaction cancelled.";
       } else {
-        const transactionChoice = Number(transactionInput);
+        const amount = Number(amountInput);
 
-        let transactionType = "";
+        // Calculate the fee OUTSIDE any if statement.
+        // It is safe to calculate even if the amount is invalid.
+        const getTransactionFee = (choice, value) => {
+          if (value <= 100) {
+            if (choice === 2) {
+              return 11;
+            }
+          } else if (value <= 1000) {
+            if (choice === 1) {
+              return 13;
+            } else if (choice === 2) {
+              return 29;
+            }
+          } else if (value <= 5000) {
+            if (choice === 1) {
+              return 53;
+            } else if (choice === 2) {
+              return 69;
+            }
+          } else if (value <= 20000) {
+            if (choice === 1) {
+              return 87;
+            } else if (choice === 2) {
+              return 185;
+            }
+          } else if (value <= MAX_AMOUNT) {
+            if (choice === 1) {
+              return 108;
+            } else if (choice === 2) {
+              return 309;
+            }
+          }
 
-        // Switch statement for transaction selection
-        switch (transactionChoice) {
-          case 1:
+          return 0;
+        };
+
+        const transactionFee = getTransactionFee(transactionChoice, amount);
+        const totalAmount = amount + transactionFee;
+
+        // First-level else-if chain: amount validation
+        if (Number.isNaN(amount)) {
+          errorMessage = "Invalid amount. Please enter a valid number.";
+        } else if (amount <= 0) {
+          errorMessage = "Invalid amount. Amount must be greater than zero.";
+        } else if (amount > MAX_AMOUNT) {
+          errorMessage = "Transaction refused: Maximum amount is KSh 150,000.";
+        } else if (transactionChoice === 2 && amount < MIN_WITHDRAWAL) {
+          errorMessage = "Transaction refused: Minimum withdrawal is KSh 50.";
+        } else {
+          // Second-level check: transaction type
+          if (transactionChoice === 1) {
             transactionType = "Send Money";
-            break;
-
-          case 2:
+          } else if (transactionChoice === 2) {
             transactionType = "Withdraw Cash";
-            break;
-
-          case 3:
+          } else if (transactionChoice === 3) {
             transactionType = "Pay a Business";
-            break;
-
-          default:
-            console.log("Unknown transaction type. Select 1, 2 or 3.");
+          } else {
+            errorMessage = "Unknown transaction type. Select 1, 2 or 3.";
+          }
         }
 
-        if (transactionType !== "") {
-          // 4. Ask for transaction amount
-          const amountInput = prompt("Enter transaction amount in KSh:");
+        if (errorMessage === "") {
+          // Generate random six-digit reference
+          const referenceNumber = Math.floor(100000 + Math.random() * 900000);
 
-          if (amountInput === null || amountInput.trim() === "") {
-            console.log("Amount is required. Transaction cancelled.");
-          } else {
-            const amount = Number(amountInput);
+          // Format numbers with thousands separators
+          const formatMoney = (value) => value.toLocaleString("en-KE");
 
-            if (Number.isNaN(amount)) {
-              console.log("Invalid amount. Please enter a valid number.");
-            } else if (amount <= 0) {
-              console.log("Invalid amount. Amount must be greater than zero.");
-            } else if (amount > Max_Amount) {
-              console.log(
-                "Transaction refused: Maximum amount is KSh 150,000.",
-              );
-            } else if (transactionChoice === 2 && amount < Min_Withdrawl) {
-              console.log("Transaction refused: Minimum withdrawal is KSh 50.");
-            } else {
-              // Calculate transaction fee
-              let transactionFee = 0;
+          // Ternary operator for free transactions
+          const feeMessage =
+            transactionFee === 0
+              ? "FREE"
+              : "KSh " + formatMoney(transactionFee);
 
-              if (amount <= 100) {
-                if (transactionChoice === 2) {
-                  transactionFee = 11;
-                }
-              } else if (amount <= 1000) {
-                if (transactionChoice === 1) {
-                  transactionFee = 13;
-                } else if (transactionChoice === 2) {
-                  transactionFee = 29;
-                }
-              } else if (amount <= 5000) {
-                if (transactionChoice === 1) {
-                  transactionFee = 53;
-                } else if (transactionChoice === 2) {
-                  transactionFee = 69;
-                }
-              } else if (amount <= 20000) {
-                if (transactionChoice === 1) {
-                  transactionFee = 87;
-                } else if (transactionChoice === 2) {
-                  transactionFee = 185;
-                }
-              } else if (amount <= Max_Amount) {
-                if (transactionChoice === 1) {
-                  transactionFee = 108;
-                } else if (transactionChoice === 2) {
-                  transactionFee = 309;
-                }
-              }
-
-              // Calculate total transaction cost
-              const totalAmount = amount + transactionFee;
-
-              // Generate random six-digit reference
-              const referenceNumber = Math.floor(
-                100000 + Math.random() * 900000,
-              );
-
-              // Format numbers with thousands separators
-              const formatMoney = (value) => value.toLocaleString("en-KE");
-
-              // Ternary operator for free transactions
-              const feeMessage =
-                transactionFee === 0
-                  ? "FREE"
-                  : "KSh " + formatMoney(transactionFee);
-
-              // Prepare receipt columns
-              const receipt = `
+          // Prepare receipt
+          const receipt = `
 ========================================
           PESA HARAKA RECEIPT
 ========================================
@@ -156,11 +175,26 @@ ${"TOTAL".padEnd(22)}${formatMoney(totalAmount).padStart(12)}
 ========================================
 `;
 
-              console.log(receipt);
-            }
+          // Final decision: error OR successful receipt
+          if (errorMessage !== "") {
+            console.log(errorMessage);
+            alert(errorMessage);
+          } else {
+            console.log(receipt);
+            alert(
+              `Done. Fee: ${feeMessage}, total: KSh ${formatMoney(
+                totalAmount,
+              )}. See the console for your receipt.`,
+            );
           }
         }
       }
     }
   }
+}
+
+// Final error display for earlier failures
+if (errorMessage !== "") {
+  console.log(errorMessage);
+  alert(errorMessage);
 }
