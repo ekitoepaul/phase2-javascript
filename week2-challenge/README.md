@@ -1,4 +1,4 @@
-# Pesa Haraka Transaction Calculator
+# Pesa Haraka Web app Transaction Calculator
 
 A responsive, accessible browser-based version of the Pesa Haraka console fee calculator. It replaces `prompt()` and `alert()` with a labelled form, live fee preview, inline validation and an on-page receipt.
 
