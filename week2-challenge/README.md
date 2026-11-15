@@ -15,7 +15,7 @@ A responsive, accessible browser-based version of the Pesa Haraka console fee ca
 ## Project structure
 
 ```text
-pesa-haraka/
+Phase2-Javascript/Week2-Challenge
 ├── index.html
 ├── css/
 │   └── styles.css
@@ -85,7 +85,7 @@ The checkers also cover empty names, empty or malformed phone numbers, missing a
 ![Pesa Haraka app screenshot](Screenshot 2026-11-15 165452.png)
 ![Pesa Haraka app screenshot](Screenshot 2026-11-15 165903.png)
 
-## Suggested Git commit history
+## Git commit history
 
 Make these as separate commits as you complete each stage (run commands from the repository root):
 
