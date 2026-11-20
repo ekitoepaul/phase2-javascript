@@ -67,7 +67,5 @@ Before recording any new payment:
 ## Screenshot
 
 Add a screenshot of your working page here after you open it in the browser.
+<img width="262" height="377" alt="image" src="https://github.com/user-attachments/assets/2b0b6770-fff8-41b8-814b-338a816afa85" />
 
-```text
-
-```
