@@ -125,7 +125,7 @@ Before recording any new payment:
 
 ## Screenshot
 
-![alt text](image.png)
+![alt text](Screenshot_Umoja.png)
 
 
 
