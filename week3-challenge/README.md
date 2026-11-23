@@ -35,7 +35,6 @@ Each member is expected to contribute KSh 1,000 every month. The page helps the 
 
 Open browser DevTools and run these tests. Each test passes one member object, except `groupTotal()`, which passes the full `members` array.
 
-```js
 const akinyi = members.find((member) => member.name === "Akinyi Achieng");
 const chebet = members.find((member) => member.name === "Chebet Kiprono");
 const hassan = members.find((member) => member.name === "Hassan Abdi");
@@ -127,5 +126,3 @@ Before recording any new payment:
 
 ![alt text](image-2.png)
 
-
-```
