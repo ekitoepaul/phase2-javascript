@@ -124,5 +124,6 @@ Before recording any new payment:
 
 ## Screenshot
 
-![alt text](image-2.png)
+![alt text](image.png)
+
 
