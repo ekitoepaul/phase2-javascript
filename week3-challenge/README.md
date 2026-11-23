@@ -125,7 +125,8 @@ Before recording any new payment:
 
 ## Screenshot
 
-![alt text](Screenshot_Umoja.png)
+<img width="251" height="377" alt="image" src="https://github.com/user-attachments/assets/e107ad35-4c8c-4fd4-b2e1-64eb226efff6" />
+
 
 
 
