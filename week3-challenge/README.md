@@ -124,8 +124,8 @@ Before recording any new payment:
 - Top contributor: Njeri Mwangi, KSh 3,500
 
 ## Screenshot
+<img width="251" height="377" alt="Screenshot 2026-11-23 145154" src="https://github.com/user-attachments/assets/99ad9c5d-a46b-439c-8b1d-f36569b0f1f3" />
 
-<img width="251" height="377" alt="image" src="https://github.com/user-attachments/assets/e107ad35-4c8c-4fd4-b2e1-64eb226efff6" />
 
 
 
