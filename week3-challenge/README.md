@@ -125,6 +125,7 @@ Before recording any new payment:
 
 ## Screenshot
 
-![alt text](image-1.png)
+<img width="263" height="377" alt="image" src="https://github.com/user-attachments/assets/2360af73-f8cc-4075-9913-5df82c96f88d" />
+
 
 
